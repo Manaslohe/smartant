@@ -1,13 +1,8 @@
 "use client";
 import React from "react";
 import { PinContainer } from "./PinContainer";
-import { TextRevealCard, TextRevealCardDescription, TextRevealCardTitle } from "./text-reveal-card";
-import { useTheme } from '../context/ThemeContext';
-import { cn } from "../lib/utils";
 
 const ProjectSection = () => {
-  const { theme } = useTheme();
-
   const projects = [
     {
       title: "Rotable Ventures",
@@ -30,81 +25,46 @@ const ProjectSection = () => {
   ];
 
   return (
-    <section className={cn(
-      "py-20 min-h-screen transition-colors duration-300",
-      theme === 'dark' ? "bg-black" : "bg-gray-50"
-    )}>
-      <div className="container mx-auto px-4">
-        <div className="text-center space-y-4 mb-20">
-          <h2 className={cn(
-            "text-8xl mt-16 font-bold transition-colors duration-300",
-            theme === 'dark' ? "text-white" : "text-gray-900"
-          )}>
+    <section className="py-10 md:py-20 min-h-screen bg-black">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="text-center space-y-4 mb-10 md:mb-20">
+          <h2 className="text-4xl md:text-8xl mt-8 md:mt-16 font-bold text-white">
             Our Projects
           </h2>
-          <h3 className={cn(
-            "text-2xl font-semibold",
-            theme === 'dark' ? "text-gray-400" : "text-gray-700"
-          )}>
+          <h3 className="text-2xl font-semibold text-gray-400">
             Transforming Ideas into Digital Reality
           </h3>
-          <p className={cn(
-            "max-w-3xl mx-auto text-lg",
-            theme === 'dark' ? "text-gray-400" : "text-gray-600"
-          )}>
+          <p className="max-w-3xl mx-auto text-lg text-gray-400">
             Explore our portfolio of innovative solutions that showcase our commitment to excellence. 
             From responsive web applications to accessibility-focused platforms, 
             we craft digital experiences that make a difference.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
           {projects.map((project, index) => (
-            <div key={index} className="h-[35rem] w-full flex items-center justify-center">
+            <div key={index} className="h-[32rem] md:h-[35rem] w-full flex items-center justify-center">
               <PinContainer title={project.title} href={project.websiteUrl}>
-                <div className="flex basis-full flex-col p-6 tracking-tight w-[24rem] h-[24rem]">
-                  <h3 className={cn(
-                    "text-xl !pb-3 !m-0 font-bold transition-colors duration-300",
-                    theme === 'dark' ? "text-white" : "text-gray-900"
-                  )}>
+                <div className="flex basis-full flex-col p-4 tracking-tight w-[20rem] md:w-[24rem] bg-zinc-900 rounded-lg">
+                  <h3 className="text-lg md:text-xl !pb-3 !m-0 font-bold text-white/90">
                     {project.title}
                   </h3>
-                  <div className="text-base !mb-6 !p-0 font-normal">
-                    <span className={theme === 'dark' ? "text-gray-400" : "text-gray-600"}>
+                  <div className="text-sm md:text-base !mb-4 md:!mb-6 !p-0 font-normal">
+                    <span className="text-gray-300">
                       {project.description}
                     </span>
                   </div>
-                  <div className="flex-1 w-full rounded-lg overflow-hidden">
+                  <div className="w-full rounded-lg overflow-hidden border border-white/10">
                     <img 
                       src={project.imageUrl} 
                       alt={project.title}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 </div>
               </PinContainer>
             </div>
           ))}
-        </div>
-
-        {/* Modified Text Reveal Card section */}
-        <div className="mt-32 mb-20">
-          <div className="flex items-center justify-center bg-[#0E0E10] h-[40rem] rounded-2xl w-full">
-            <TextRevealCard 
-              text="Building Digital Excellence" 
-              revealText="Crafting Future Solutions"
-              className="w-[60rem] max-w-[95vw]" // Increased width and added max-width for responsiveness
-            >
-              <TextRevealCardTitle className="text-3xl"> {/* Increased title size */}
-                Transform Your Vision Into Reality
-              </TextRevealCardTitle>
-              <TextRevealCardDescription className="max-w-2xl text-lg"> {/* Increased description width and font size */}
-                From concept to deployment, we create innovative digital solutions 
-                that drive business growth. Our expertise in modern web technologies 
-                ensures your project stands out in today's competitive landscape.
-              </TextRevealCardDescription>
-            </TextRevealCard>
-          </div>
         </div>
       </div>
     </section>
