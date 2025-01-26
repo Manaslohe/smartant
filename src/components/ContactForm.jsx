@@ -39,7 +39,7 @@ const ContactFormAndInfo = () => {
       className="w-full min-h-[80vh] flex flex-col items-center justify-center py-12 px-4 bg-white"
     >
       <motion.h1 
-        className="text-5xl md:text-6xl font-bold mb-16 text-center text-black"
+        className="text-5xl md:text-6xl font-bold mb-8 pt-20 text-center text-black"
       >
         Let's Connect
         <motion.span 

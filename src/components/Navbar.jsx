@@ -1,171 +1,184 @@
 "use client";
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-
-const transition = {
-  type: "spring",
-  mass: 0.5,
-  damping: 11.5,
-  stiffness: 100,
-  restDelta: 0.001,
-  restSpeed: 0.001,
-};
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
 const Logo = () => (
-  <img
+  <motion.img
     src="/logo.png"
     alt="Smart Ant Logo"
-    className="h-8 w-auto md:h-10 transition-transform hover:scale-105"
+    initial={{ scale: 1 }}
+    whileHover={{ scale: 1.1 }}
+    transition={{ type: "spring", stiffness: 300 }}
+    className="h-8 w-auto md:h-10"
   />
 );
 
-const MenuItem = ({ setActive, active, item, children }) => {
-  return (
-    <div onMouseEnter={() => setActive(item)} className="relative">
-      <motion.p
-        transition={{ duration: 0.3 }}
-        className="cursor-pointer text-black hover:opacity-[0.9] dark:text-white"
-      >
-        {item}
-      </motion.p>
-      {active !== null && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.85, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={transition}
-        >
-          {active === item && (
-            <div className="absolute top-[calc(100%_+_1.2rem)] left-1/2 transform -translate-x-1/2 pt-4">
-              <motion.div
-                transition={transition}
-                layoutId="active"
-                className="bg-white dark:bg-black backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] dark:border-white/[0.2] shadow-xl"
-              >
-                <motion.div
-                  layout
-                  className="w-max h-full p-4"
-                >
-                  {children}
-                </motion.div>
-              </motion.div>
-            </div>
-          )}
-        </motion.div>
-      )}
-    </div>
-  );
-};
-
-const Menu = ({ setActive, children }) => {
-  return (
-    <nav
-      onMouseLeave={() => setActive(null)}
-      className="relative rounded-[20px] border 
-        bg-white/80 dark:bg-zinc-900/80 backdrop-blur-[8px]
-        border-white/20 dark:border-zinc-800/20
-        shadow-lg dark:shadow-zinc-800/20
-        flex items-center justify-between px-8 py-4 
-        w-full max-w-7xl mx-auto
-        transition-all duration-300 ease-in-out"
-    >
-      {children}
-    </nav>
-  );
-};
+const NavItem = ({ name, href, onClick, isActive }) => (
+  <motion.button
+    initial={{ scale: 1, backgroundColor: 'transparent' }}
+    whileHover={{ 
+      scale: 1.05,
+      backgroundColor: 'rgba(0, 200, 232, 0.2)' 
+    }}
+    whileTap={{ scale: 0.95 }}
+    onClick={onClick}
+    className={`px-3 py-2 rounded-lg transition-all duration-300 
+      font-medium tracking-wider
+      ${isActive 
+        ? 'text-[#00c8e8] bg-[#00c8e8]/20' 
+        : 'text-gray-200 hover:text-[#00c8e8]'}`}
+  >
+    {name}
+  </motion.button>
+);
 
 const Navbar = () => {
-  const [active, setActive] = useState(null);
-  
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [isVisible, setIsVisible] = useState(true);
+  const { scrollY } = useScroll();
+
   const navItems = [
-    { 
-      name: "Home", 
-      submenu: [
-        { name: "Home", href: "#home" },
-        { name: "Features", href: "#features" },
-        { name: "About Us", href: "#about" }
-      ]
-    },
-    { 
-      name: "About Us", 
-      submenu: [
-        { name: "Our Story", href: "#about-us" },
-        { name: "Team", href: "#team" }
-      ]
-    },
-    { 
-      name: "Projects", 
-      submenu: [
-        { name: "Our Work", href: "#projects" },
-        { name: "Case Studies", href: "#case-studies" }
-      ]
-    },
-    { 
-      name: "Contact", 
-      submenu: [
-        { name: "Get in Touch", href: "#contact" },
-        { name: "Support", href: "#support" }
-      ]
-    }
+    { name: "Home", href: "home" },
+    { name: "About", href: "about" },
+    { name: "Projects", href: "projects" },
+    { name: "Contact", href: "contact" }
   ];
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const prev = scrollY.getPrevious();
+    setIsVisible(latest <= prev || latest < 100);
+  });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navItems.map(item => 
+        document.getElementById(item.href)
+      ).filter(Boolean);
+
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
+
+      for (let section of sections) {
+        if (section.offsetTop <= scrollPosition && 
+            section.offsetTop + section.offsetHeight > scrollPosition) {
+          setActiveSection(section.id);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+      setMobileMenuOpen(false);
+      setActiveSection(id);
+    }
+  };
 
   return (
     <>
       {/* Desktop Navbar */}
-      <div className="hidden md:block fixed top-0 w-full z-[100] px-4 py-4">
-        <Menu setActive={setActive}>
+      <motion.nav 
+        initial={{ y: -100 }}
+        animate={{ 
+          y: isVisible ? 0 : -100,
+          transition: { 
+            type: "spring", 
+            stiffness: 300, 
+            damping: 30 
+          }
+        }}
+        className="hidden md:block fixed top-0 w-full z-[100] px-4 py-4"
+      >
+        <div className="relative rounded-[20px] border 
+          bg-zinc-800/90 backdrop-blur-[12px]
+          border-zinc-700/30
+          shadow-lg shadow-zinc-900/30
+          flex items-center justify-between px-8 py-4 
+          w-full max-w-7xl mx-auto
+          transition-all duration-300 ease-in-out"
+        >
           <div className="flex items-center">
             <a href="/" className="flex items-center space-x-3">
               <Logo />
-              <span className="text-xl font-eras text-white transition-colors duration-300">
+              <span className="text-xl font-eras text-gray-200 transition-colors duration-300">
                 SmartAnt
               </span>
             </a>
           </div>
 
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center space-x-2">
             {navItems.map((item) => (
-              <MenuItem 
-                key={item.name}
-                setActive={setActive} 
-                active={active} 
-                item={item.name}
-              >
-                <div className="flex flex-col space-y-4 text-sm">
-                  {item.submenu.map((subitem) => (
-                    <a
-                      key={subitem.href}
-                      href={subitem.href}
-                      className="text-neutral-700 dark:text-neutral-200 hover:text-black"
-                    >
-                      {subitem.name}
-                    </a>
-                  ))}
-                </div>
-              </MenuItem>
+              <NavItem 
+                key={item.name} 
+                {...item} 
+                isActive={activeSection === item.href}
+                onClick={() => scrollToSection(item.href)} 
+              />
             ))}
           </div>
-        </Menu>
-      </div>
+        </div>
+      </motion.nav>
 
       {/* Mobile Navbar */}
-      <div className="md:hidden fixed top-0 w-full z-[100] px-4 py-4">
-        <nav className="flex justify-between items-center bg-white/80 dark:bg-zinc-900/80 backdrop-blur-[8px] rounded-[20px] p-4">
-          <a href="/" className="flex items-center">
+      <motion.nav 
+        initial={{ y: -100 }}
+        animate={{ 
+          y: isVisible ? 0 : -100,
+          transition: { 
+            type: "spring", 
+            stiffness: 300, 
+            damping: 30 
+          }
+        }}
+        className="md:hidden fixed top-0 w-full z-[100] px-4 py-4"
+      >
+        <div className="flex justify-between items-center bg-zinc-800/90 backdrop-blur-[12px] rounded-[20px] p-4">
+          <div className="flex items-center space-x-3">
             <Logo />
-          </a>
-          <div className="flex items-center space-x-4">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.submenu[0].href}
-                className="text-sm text-black dark:text-white"
-              >
-                {item.name}
-              </a>
-            ))}
+            <span className="text-xl font-eras text-gray-200">
+              SmartAnt
+            </span>
           </div>
-        </nav>
-      </div>
+          <motion.button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            whileTap={{ scale: 0.9 }}
+            className="text-gray-200 hover:text-white"
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </motion.button>
+        </div>
+
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              className="absolute top-20 left-4 right-4 bg-zinc-800/90 
+                backdrop-blur-[12px] rounded-[20px] shadow-lg p-6 flex flex-col space-y-4"
+            >
+              {navItems.map((item) => (
+                <NavItem 
+                  key={item.name} 
+                  {...item} 
+                  isActive={activeSection === item.href}
+                  onClick={() => scrollToSection(item.href)} 
+                />
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
     </>
   );
 };
