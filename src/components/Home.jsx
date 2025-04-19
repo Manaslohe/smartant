@@ -30,7 +30,12 @@ const Home = () => {
     <div className="w-full relative">
       <Navbar />
       
-      <section id="home" className="relative min-h-[100svh]">
+      <section id="home" className="relative min-h-[100svh] bg-[#171818]">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="absolute inset-0"
+        />
         <BackgroundLines 
           svgOptions={{ duration: 10 }}
           className="absolute inset-0"
@@ -48,7 +53,7 @@ const Home = () => {
                 transition={{ duration: 1, ease: "easeOut" }}
                 className="text-center relative w-full"
               >
-                <h1 className="font-playfair text-6xl sm:text-7xl md:text-8xl lg:text-[12rem] font-bold mb-4 sm:mb-2 text-gray-900 dark:text-white leading-none tracking-tight">
+                <h1 className="font-playfair text-6xl sm:text-7xl md:text-8xl lg:text-[12rem] font-bold mb-4 sm:mb-2 text-gray-50 dark:text-white leading-none tracking-tight">
                   Smart<span className="text-[#00c8e8]">Ant</span>
                 </h1>
                 <div className="mt-6 sm:mt-8 mb-8 sm:mb-10">

@@ -22,7 +22,7 @@ export const BackgroundLines = ({
   return (
     <div
       className={cn(
-        "h-screen w-full bg-black dark:bg-black fixed top-0 left-0 z-0",
+        "h-screen w-full bg-transparent fixed top-0 left-0 z-0",
         className
       )}
     >

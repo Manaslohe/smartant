@@ -1,7 +1,6 @@
 "use client";
 import React, { memo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiChevronsDown } from 'react-icons/fi';
+import { motion } from 'framer-motion';
 import { HoverBorderGradient } from './HoverBorderGradient';
 
 const ExploreButton = memo(({ onClick }) => {
@@ -11,10 +10,9 @@ const ExploreButton = memo(({ onClick }) => {
         containerClassName="rounded-full p-[3px]"
         as="button"
         onClick={onClick}
-        className="dark:bg-black bg-white text-black dark:text-white flex items-center justify-center space-x-4 min-w-[200px] py-4"
+        className="bg-[#1d1e1f] text-gray-100 flex items-center justify-center min-w-[180px] py-3.5 hover:bg-[#242526] transition-colors duration-300"
       >
-        <span className="font-medium text-xl">Explore</span>
-        <AnimatedArrows />
+        <span className="font-medium text-lg tracking-wide px-4">Explore</span>
       </HoverBorderGradient>
 
       <motion.div
@@ -24,7 +22,7 @@ const ExploreButton = memo(({ onClick }) => {
         className="mt-6"
       >
         <motion.span 
-          className="text-black/80 dark:text-white/80 text-sm uppercase tracking-widest whitespace-nowrap"
+          className="text-gray-300 text-sm uppercase tracking-widest whitespace-nowrap"
           animate={{
             opacity: [0.6, 1, 0.6],
           }}
@@ -41,29 +39,6 @@ const ExploreButton = memo(({ onClick }) => {
   );
 });
 
-// Removed ExploreIcon component as it's no longer needed
-
-// Updated AnimatedArrows for better visibility with larger button
-const AnimatedArrows = memo(() => (
-  <div className="relative w-7 h-7 overflow-hidden">
-    <motion.div
-      animate={{
-        y: [0, 6, 0],
-      }}
-      transition={{
-        duration: 3,
-        repeat: Infinity,
-        ease: "easeInOut",
-        repeatDelay: 0.5,
-      }}
-    >
-      {/* Increased arrow size to match new button scale */}
-      <FiChevronsDown className="w-6 h-6 text-black dark:text-white" />
-    </motion.div>
-  </div>
-));
-
 ExploreButton.displayName = 'ExploreButton';
-AnimatedArrows.displayName = 'AnimatedArrows';
 
 export default ExploreButton;

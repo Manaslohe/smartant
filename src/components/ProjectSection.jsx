@@ -26,11 +26,11 @@ const ProjectSection = () => {
   ];
 
   return (
-    <section className="w-full bg-black/95 relative z-30 py-20 md:py-32">
+    <section className="w-full bg-[#171818] relative z-30 py-20 md:py-32">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="absolute inset-0 bg-gradient-to-b from-black/0 via-[#00c8e8]/5 to-black/0"
+        className="absolute inset-0 bg-[#171818]"
       />
       <div className="container mx-auto px-4 md:px-6 relative">
         <motion.div
@@ -62,7 +62,7 @@ const ProjectSection = () => {
               className="h-[24rem] md:h-[30rem] w-full flex items-center justify-center"
             >
               <PinContainer title={project.title} href={project.websiteUrl}>
-                <div className="flex basis-full flex-col p-4 tracking-tight w-[20rem] md:w-[24rem] bg-white/[0.02] backdrop-blur-sm border border-white/[0.08] rounded-lg">
+                <div className="flex basis-full flex-col p-4 tracking-tight w-[20rem] md:w-[24rem] bg-gradient-to-br from-[#1c1d1d]/80 to-[#252627]/80 backdrop-blur-sm border border-white/[0.08] rounded-lg">
                   <h3 className="text-lg md:text-xl !pb-3 !m-0 font-bold text-white/90">
                     {project.title}
                   </h3>

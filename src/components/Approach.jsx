@@ -77,7 +77,7 @@ const ApproachCard = ({ title, description, details, icon, color, index }) => (
             transition={{ delay: 0.3 + (i * 0.1) }}
             className="flex items-start text-gray-400 relative z-10 group"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00c8e8]/50 mr-3 mt-2"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#171818] mr-3 mt-2"></span>
             <span className="text-sm md:text-base leading-relaxed group-hover:text-gray-300 transition-colors">
               {detail}
             </span>
@@ -90,21 +90,26 @@ const ApproachCard = ({ title, description, details, icon, color, index }) => (
 
 const Approach = () => {
   return (
-    <section id="approach" className="w-full bg-black/95 relative z-50 py-16 md:py-24">
+    <section id="approach" className="w-full bg-[#171818] relative z-50 py-16 md:py-24">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        className="absolute inset-0 bg-gradient-to-b from-[#00c8e8]/5 via-black/0 to-[#00c8e8]/5"
+        className="absolute inset-0 bg-[#171818]/[0.01]"
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12 md:mb-20"
+          className="text-center space-y-4 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6">Our Approach</h2>
-          <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
+          <h2 className="text-4xl md:text-6xl lg:text-8xl font-bold text-white">
+            Our Approach
+          </h2>
+          <h3 className="text-xl md:text-2xl font-semibold text-gray-400/90">
+            Strategic Planning for Digital Success
+          </h3>
+          <p className="max-w-3xl mx-auto text-base md:text-lg text-gray-400/80 leading-relaxed">
             We believe that every project is a partnership, and our success depends on understanding 
             our client's goals, challenges, and vision. Through strategic planning, collaborative 
             execution, and continuous improvement, we deliver solutions that drive lasting success.

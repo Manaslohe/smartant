@@ -64,17 +64,17 @@ const TextRevealSection = () => {
     <>
       <motion.section 
         ref={sectionRef}
-        className="relative bg-black py-10 md:py-20 transform-gpu overflow-hidden"
+        className="relative bg-[#171818] py-10 md:py-20 transform-gpu overflow-hidden"
       >
         <motion.div 
-          className="absolute inset-0 bg-white pointer-events-none"
+          className="absolute inset-0 bg-[#1c1d1d] pointer-events-none"
           style={{ opacity: overlayOpacity }}
         />
         
         <motion.div 
-          className="absolute inset-0 opacity-40"
+          className="absolute inset-0 opacity-30"
           style={{
-            background: "radial-gradient(circle at 50% 50%, rgba(25, 25, 25, 0.8) 0%, rgba(0, 0, 0, 0.8) 100%)"
+            background: "radial-gradient(circle at 50% 50%, rgba(0, 200, 232, 0.03) 0%, rgba(23, 24, 24, 0.5) 100%)"
           }}
         />
         
@@ -85,7 +85,7 @@ const TextRevealSection = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-4xl md:text-5xl font-bold text-center text-white mb-4 tracking-tight"
+              className="text-4xl md:text-6xl lg:text-8xl font-bold text-center text-white mb-4 tracking-tight"
             >
               Why Choose Us?
             </motion.h2>
@@ -93,7 +93,7 @@ const TextRevealSection = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-slate-400 text-center max-w-2xl mx-auto mb-16 text-lg"
+              className="text-xl md:text-2xl font-semibold text-gray-400/90 text-center max-w-2xl mx-auto mb-16"
             >
               We bring expertise and innovation to every project
             </motion.p>
@@ -108,13 +108,13 @@ const TextRevealSection = () => {
                   style={{ y: item.translateY }}
                   className="relative group"
                 >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${item.borderGradient} rounded-2xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500`} />
+                  <div className={`absolute inset-0 bg-gradient-to-br ${item.borderGradient} rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500`} />
                   <div className={`relative h-full bg-gradient-to-br ${item.gradient} backdrop-blur-sm rounded-2xl p-[1px] hover:scale-[1.03] transition-all duration-300 ease-out`}>
-                    <div className="h-full bg-slate-950/90 rounded-2xl p-8 backdrop-blur-sm">
-                      <h3 className="text-xl font-semibold text-white mb-4 tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-300">
+                    <div className="h-full bg-gradient-to-br from-[#1c1d1d]/90 to-[#252627]/90 rounded-2xl p-8 backdrop-blur-sm border border-white/[0.08]">
+                      <h3 className="text-xl font-semibold text-white mb-4 tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-white to-[#00c8e8]">
                         {item.title}
                       </h3>
-                      <p className="text-slate-300 leading-relaxed font-light">
+                      <p className="text-gray-300 leading-relaxed font-light">
                         {item.description}
                       </p>
                     </div>
@@ -124,7 +124,7 @@ const TextRevealSection = () => {
             </div>
           </div>
 
-          {/* Existing Text Reveal Content */}
+          {/* Text Reveal Content */}
           <div className="mb-6 md:mb-20 px-4 md:px-0">
             <motion.div 
               style={{ 
@@ -135,6 +135,8 @@ const TextRevealSection = () => {
               <TextRevealCard 
                 text="Building Digital Excellence" 
                 revealText="Crafting Future Solutions"
+                textColor="#ffffff"
+                revealTextColor="#00c8e8"
                 className="w-[100%] sm:w-[90vw] md:w-[60rem] max-w-[90vw]"
                 style={{ willChange: "transform" }}
               >
